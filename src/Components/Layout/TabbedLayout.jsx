@@ -19,13 +19,13 @@ export default function TabbedLayout({ tabs = [], selectedIndex, onChange }) {
           )}
         >
           {!isSingleTab && (
-            <TabList className="flex flex-col w-1/4 p-4 border border-gray-200 bg-white rounded-xl space-y-1">
+            <TabList className="flex flex-col w-1/4 p-1 lg:p-4 border border-gray-200 bg-white rounded-xl space-y-1">
               {tabs.map((tab) => (
                 <Tab
                   key={tab.label}
                   className={({ selected }) =>
                     classNames(
-                      "w-full rounded-lg py-2.5 px-4 text-left text-sm font-medium leading-5 transition-all outline-none",
+                      "w-full rounded-lg py-2.5 px-1 lg:px-4 text-left text-sm font-medium leading-5 transition-all outline-none",
                       selected
                         ? "bg-secondary text-primary shadow-sm"
                         : "text-gray-500 hover:bg-gray-50 hover:text-gray-700",

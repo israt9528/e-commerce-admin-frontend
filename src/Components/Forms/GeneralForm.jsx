@@ -1,21 +1,26 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
+import { useForm } from "react-hook-form";
 import DescriptionEditor from "./DescriptionEditor";
+import { useFormState } from "../Context/FormContext";
 
 const GeneralForm = ({ onNext }) => {
-  const [description, setDescription] = useState("");
-  const [formData, setFormData] = useState({
-    name: "",
-    brand: "",
-    categories: "",
-    tags: "",
-    taxClass: "",
+  // 1. Get global data and the save function from context
+  const { formData, saveTabData } = useFormState();
+
+  // 2. Initialize Hook Form with the 'general' bucket
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm({
+    defaultValues: formData.general,
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  // 3. Watch description to update word count in real-time
+  const description = watch("description", "");
 
   const wordCount = description
     ? description
@@ -24,10 +29,17 @@ const GeneralForm = ({ onNext }) => {
         .split(/\s+/)
         .filter(Boolean).length
     : 0;
+
+  // 4. Save to the 'general' section and move to next tab
+  const onSubmit = (data) => {
+    saveTabData("general", data);
+    onNext();
+  };
+
   return (
     <div className="w-full bg-white rounded-lg border border-gray-200 overflow-hidden">
-      <div className="p-6 space-y-4">
-        {/* Name Input */}
+      <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-4">
+        {/* Name Input with Validation */}
         <div className="form-control w-full">
           <label className="label">
             <span className="label-text font-semibold text-gray-700">
@@ -35,15 +47,20 @@ const GeneralForm = ({ onNext }) => {
             </span>
           </label>
           <input
-            name="name"
             type="text"
-            value={formData.name}
-            onChange={handleChange}
-            className="input input-bordered w-full h-11 focus:outline-teal-500"
+            {...register("name", { required: "Product name is required" })}
+            className={`input input-bordered w-full h-11 focus:outline-teal-500 ${
+              errors.name ? "border-red-500" : ""
+            }`}
           />
+          {errors.name && (
+            <span className="text-red-500 text-xs mt-1">
+              {errors.name.message}
+            </span>
+          )}
         </div>
 
-        {/* Description Editor */}
+        {/* Description Editor (Manual Bridge) */}
         <div className="form-control w-full">
           <label className="label">
             <span className="label-text font-semibold text-gray-700">
@@ -51,12 +68,15 @@ const GeneralForm = ({ onNext }) => {
             </span>
           </label>
           <div className="border border-gray-300 rounded-md overflow-hidden">
-            <DescriptionEditor value={description} onChange={setDescription} />
+            <DescriptionEditor
+              value={description}
+              onChange={(val) => setValue("description", val)}
+            />
             <div className="bg-gray-50 border-t border-gray-200 px-4 py-1.5 flex justify-between items-center text-[11px] text-gray-500 uppercase">
               <span>p »</span>
               <span>
                 {wordCount} {wordCount === 1 ? "WORD" : "WORDS"}
-              </span>{" "}
+              </span>
             </div>
           </div>
         </div>
@@ -69,9 +89,7 @@ const GeneralForm = ({ onNext }) => {
             </span>
           </label>
           <select
-            name="brand"
-            value={formData.brand}
-            onChange={handleChange}
+            {...register("brand")}
             className="select select-bordered w-full h-11 focus:outline-teal-500 font-normal"
           >
             <option value="">Please Select</option>
@@ -80,7 +98,7 @@ const GeneralForm = ({ onNext }) => {
           </select>
         </div>
 
-        {/* Categories Input */}
+        {/* Categories */}
         <div className="form-control w-full">
           <label className="label">
             <span className="label-text font-semibold text-gray-700">
@@ -88,29 +106,25 @@ const GeneralForm = ({ onNext }) => {
             </span>
           </label>
           <input
-            name="categories"
             type="text"
-            value={formData.categories}
-            onChange={handleChange}
+            {...register("categories")}
             className="input input-bordered w-full h-11 focus:outline-teal-500"
           />
         </div>
 
-        {/* Tags Input */}
+        {/* Tags */}
         <div className="form-control w-full">
           <label className="label">
             <span className="label-text font-semibold text-gray-700">Tags</span>
           </label>
           <input
-            name="tags"
             type="text"
-            value={formData.tags}
-            onChange={handleChange}
+            {...register("tags")}
             className="input input-bordered w-full h-11 focus:outline-teal-500"
           />
         </div>
 
-        {/* Tax Class Dropdown */}
+        {/* Tax Class */}
         <div className="form-control w-full">
           <label className="label">
             <span className="label-text font-semibold text-gray-700">
@@ -118,9 +132,7 @@ const GeneralForm = ({ onNext }) => {
             </span>
           </label>
           <select
-            name="taxClass"
-            value={formData.taxClass}
-            onChange={handleChange}
+            {...register("taxClass")}
             className="select select-bordered w-full h-11 focus:outline-teal-500 font-normal"
           >
             <option value="">Please Select</option>
@@ -128,16 +140,17 @@ const GeneralForm = ({ onNext }) => {
             <option value="exempt">Tax Exempt</option>
           </select>
         </div>
+
+        {/* Navigation Button */}
         <div className="flex justify-end mt-8 pt-4 border-t border-gray-100">
           <button
-            onClick={onNext}
-            type="button"
+            type="submit"
             className="btn bg-primary hover:bg-teal-700 text-white border-none px-8 capitalize"
           >
             Continue to next
           </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

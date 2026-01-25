@@ -1,16 +1,30 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
+import { useForm } from "react-hook-form";
 import { HiOutlineCalendar, HiOutlineViewGrid } from "react-icons/hi";
+import { useFormState } from "../Context/FormContext";
 
 const AdditionalForm = ({ onNext }) => {
-  const [additional, setAdditional] = useState({
-    shortDescription: "",
-    newFrom: "",
-    newTo: "",
+  // 1. Pull global state and save function from context
+  const { formData, saveTabData } = useFormState();
+
+  // 2. Initialize Hook Form with values from the 'additional' section
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: formData.additional || {
+      shortDescription: "",
+      newFrom: "",
+      newTo: "",
+    },
   });
 
-  const handleChange = (e) => {
-    setAdditional({ ...additional, [e.target.name]: e.target.value });
+  // 3. Save to the 'additional' section and move next
+  const onSubmit = (data) => {
+    saveTabData("additional", data); // Merges these fields into formData.additional
+    onNext();
   };
 
   return (
@@ -21,16 +35,14 @@ const AdditionalForm = ({ onNext }) => {
         <HiOutlineViewGrid className="text-gray-400" />
       </div>
 
-      <div className="p-6 space-y-5">
+      <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-5">
         {/* Short Description */}
         <div className="form-control">
           <label className="label-text mb-2 text-gray-600 font-medium">
             Short Description
           </label>
           <textarea
-            name="shortDescription"
-            value={additional.shortDescription}
-            onChange={handleChange}
+            {...register("shortDescription")}
             className="textarea textarea-bordered w-full h-32 focus:outline-teal-500"
           ></textarea>
         </div>
@@ -46,9 +58,7 @@ const AdditionalForm = ({ onNext }) => {
             </span>
             <input
               type="date"
-              name="newFrom"
-              value={additional.newFrom}
-              onChange={handleChange}
+              {...register("newFrom")}
               className="input input-bordered rounded-l-none w-full h-10 focus:outline-teal-500"
             />
           </div>
@@ -64,23 +74,22 @@ const AdditionalForm = ({ onNext }) => {
             </span>
             <input
               type="date"
-              name="newTo"
-              value={additional.newTo}
-              onChange={handleChange}
+              {...register("newTo")}
               className="input input-bordered rounded-l-none w-full h-10 focus:outline-teal-500"
             />
           </div>
         </div>
+
+        {/* Navigation Button */}
         <div className="flex justify-end mt-8 pt-4 border-t border-gray-100">
           <button
-            onClick={onNext}
-            type="button"
+            type="submit"
             className="btn bg-primary hover:bg-teal-700 text-white border-none px-8 capitalize"
           >
             Continue to next
           </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

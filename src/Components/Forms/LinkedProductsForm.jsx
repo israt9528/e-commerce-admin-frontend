@@ -1,16 +1,26 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
+import { useForm } from "react-hook-form";
 import { HiOutlineViewGrid } from "react-icons/hi";
+import { useFormState } from "../Context/FormContext";
 
 const LinkedProductsForm = () => {
-  const [links, setLinks] = useState({
-    upSells: "",
-    crossSells: "",
-    related: "",
+  // 1. Access the global context
+  const { formData, saveTabData } = useFormState();
+
+  // 2. Initialize Hook Form with current context values
+  const { register, handleSubmit } = useForm({
+    defaultValues: formData.linkedProducts || {
+      upSells: "",
+      crossSells: "",
+      related: "",
+    },
   });
 
-  const handleChange = (e) => {
-    setLinks({ ...links, [e.target.name]: e.target.value });
+  // 3. Save to the context
+  // Since this is the last tab, you can call saveTabData on change or via a final local button
+  const onSubmit = (data) => {
+    saveTabData("linkedProducts", data);
   };
 
   return (
@@ -20,16 +30,17 @@ const LinkedProductsForm = () => {
         <HiOutlineViewGrid className="text-gray-400" />
       </div>
 
-      <div className="p-6 space-y-5">
+      {/* We use onChange on the inputs to ensure the global state is always up to date 
+         even without a 'Continue' button on the last tab.
+      */}
+      <form onBlur={handleSubmit(onSubmit)} className="p-6 space-y-5">
         <div className="form-control">
           <label className="label-text mb-2 text-gray-600 font-medium">
             Up-Sells
           </label>
           <input
             type="text"
-            name="upSells"
-            value={links.upSells}
-            onChange={handleChange}
+            {...register("upSells")}
             className="input input-bordered w-full h-10 focus:outline-teal-500"
           />
         </div>
@@ -40,9 +51,7 @@ const LinkedProductsForm = () => {
           </label>
           <input
             type="text"
-            name="crossSells"
-            value={links.crossSells}
-            onChange={handleChange}
+            {...register("crossSells")}
             className="input input-bordered w-full h-10 focus:outline-teal-500"
           />
         </div>
@@ -53,13 +62,15 @@ const LinkedProductsForm = () => {
           </label>
           <input
             type="text"
-            name="related"
-            value={links.related}
-            onChange={handleChange}
+            {...register("related")}
             className="input input-bordered w-full h-10 focus:outline-teal-500"
           />
         </div>
-      </div>
+
+        <p className="text-xs text-gray-400 italic mt-4">
+          Data is saved automatically when you leave a field.
+        </p>
+      </form>
     </div>
   );
 };
