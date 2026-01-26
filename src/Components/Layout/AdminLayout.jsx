@@ -91,12 +91,7 @@ const AdminLayout = ({ children }) => {
       href: "/reviews",
       isDropdown: false,
     },
-    {
-      icon: <FiStar size={20} />,
-      label: "Brands",
-      href: "/brands",
-      isDropdown: false,
-    },
+
     {
       icon: <FiPieChart size={20} />,
       label: "Statistics",

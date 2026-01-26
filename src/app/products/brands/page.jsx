@@ -2,6 +2,8 @@
 
 import React, { useEffect, useRef } from "react";
 import brandsData from "@/Data/brands.json";
+import Link from "next/link";
+import { FormProvider } from "@/Components/Context/FormContext";
 
 const BrandsPage = () => {
   const tableRef = useRef(null);
@@ -114,22 +116,37 @@ const BrandsPage = () => {
   }, []);
 
   return (
-    <div className="p-6 bg-[#f8f9fa] min-h-screen">
-      <div className="datatable-container">
-        <table ref={tableRef} className="display w-full">
-          <thead>
-            <tr>
-              <th></th>
-              <th>ID</th>
-              <th>Logo</th>
-              <th>Name</th>
-              <th>Status</th>
-              <th className="text-right">Created</th>
-            </tr>
-          </thead>
-        </table>
+    <FormProvider>
+      <div className="p-6 bg-[#f8f9fa] min-h-screen">
+        <div className="flex justify-between mb-5">
+          <h1 className="text-3xl text-primary font-bold">Brands</h1>
+          <div>
+            {/* 4. Attach the save function */}
+            <Link
+              href="/products/brands/create-brand"
+              type="button"
+              className="btn btn-primary btn-outline"
+            >
+              Create Brand
+            </Link>
+          </div>
+        </div>
+        <div className="datatable-container">
+          <table ref={tableRef} className="display w-full">
+            <thead>
+              <tr>
+                <th></th>
+                <th>ID</th>
+                <th>Logo</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th className="text-right">Created</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
       </div>
-    </div>
+    </FormProvider>
   );
 };
 

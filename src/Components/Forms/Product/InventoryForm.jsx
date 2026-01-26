@@ -2,73 +2,79 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { HiOutlineViewGrid } from "react-icons/hi";
-import { useFormState } from "../Context/FormContext";
+import { useFormState } from "../../Context/FormContext";
 
-const SeoForm = ({ onNext }) => {
-  // 1. Pull global state and save function from context
+const InventoryForm = ({ onNext }) => {
+  // 1. Access the global context
   const { formData, saveTabData } = useFormState();
 
-  // 2. Initialize Hook Form with current context values for the 'seo' section
+  // 2. Initialize Hook Form with values from the 'inventory' bucket
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues: formData.seo || {
-      url: "",
-      metaTitle: "",
-      metaDescription: "",
+    defaultValues: formData.inventory || {
+      sku: "",
+      management: "",
+      stock: "",
     },
   });
 
-  // 3. Save to the 'seo' section and move next
+  // 3. Save to the inventory section and move next
   const onSubmit = (data) => {
-    saveTabData("seo", data); // Merges these fields into formData.seo
+    saveTabData("inventory", data); // Merges these fields into formData.inventory
     onNext();
   };
 
   return (
     <div className="w-full bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm">
       <div className="px-4 py-3 border-b border-gray-200 flex justify-between items-center bg-white">
-        <h2 className="text-gray-700 font-medium">SEO</h2>
+        <h2 className="text-gray-700 font-medium">Inventory</h2>
         <HiOutlineViewGrid className="text-gray-400" />
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-5">
-        {/* URL Input */}
+      <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-3">
+        {/* SKU Input */}
         <div className="form-control">
           <label className="label-text mb-2 text-gray-600 font-medium">
-            URL
+            SKU
           </label>
           <input
             type="text"
-            {...register("url")}
-            className="input input-bordered w-full h-10 focus:outline-teal-500"
-            placeholder="product-slug-example"
-          />
-        </div>
-
-        {/* Meta Title Input */}
-        <div className="form-control">
-          <label className="label-text mb-2 text-gray-600 font-medium">
-            Meta Title
-          </label>
-          <input
-            type="text"
-            {...register("metaTitle")}
+            {...register("sku")}
             className="input input-bordered w-full h-10 focus:outline-teal-500"
           />
         </div>
 
-        {/* Meta Description Input */}
+        {/* Inventory Management Dropdown */}
         <div className="form-control">
           <label className="label-text mb-2 text-gray-600 font-medium">
-            Meta Description
+            Inventory Management
           </label>
-          <textarea
-            {...register("metaDescription")}
-            className="textarea textarea-bordered w-full h-32 focus:outline-teal-500"
-          ></textarea>
+          <select
+            {...register("management")}
+            className="select select-bordered w-full h-10 min-h-0 font-normal focus:outline-teal-500"
+          >
+            <option value="Do not Track Inventory">
+              Do not Track Inventory
+            </option>
+            <option value="Track Inventory">Track Inventory</option>
+          </select>
+        </div>
+
+        {/* Stock Availability Dropdown */}
+        <div className="form-control">
+          <label className="label-text mb-2 text-gray-600 font-medium">
+            Stock Availability
+          </label>
+          <select
+            {...register("stock")}
+            className="select select-bordered w-full h-10 min-h-0 font-normal focus:outline-teal-500"
+          >
+            <option value="In Stock">In Stock</option>
+            <option value="Out of Stock">Out of Stock</option>
+          </select>
         </div>
 
         {/* Navigation Button */}
@@ -85,4 +91,4 @@ const SeoForm = ({ onNext }) => {
   );
 };
 
-export default SeoForm;
+export default InventoryForm;

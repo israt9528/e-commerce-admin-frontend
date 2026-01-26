@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { HiOutlinePhotograph } from "react-icons/hi";
-import { useFormState } from "../Context/FormContext";
+import { useFormState } from "../../Context/FormContext";
 
 const MediaForm = ({ onNext }) => {
   // 1. Pull global state and save function from context

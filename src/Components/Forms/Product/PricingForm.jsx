@@ -2,7 +2,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { HiOutlineCalendar, HiOutlineViewGrid } from "react-icons/hi";
-import { useFormState } from "../Context/FormContext";
+import { useFormState } from "../../Context/FormContext";
 
 const PricingForm = ({ onNext }) => {
   // 1. Access the global context

@@ -2,7 +2,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import DescriptionEditor from "./DescriptionEditor";
-import { useFormState } from "../Context/FormContext";
+import { useFormState } from "../../Context/FormContext";
 
 const GeneralForm = ({ onNext }) => {
   const { formData, saveTabData } = useFormState();

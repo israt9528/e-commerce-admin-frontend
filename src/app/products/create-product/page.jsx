@@ -2,15 +2,15 @@
 import React, { useState } from "react";
 // 1. Import your Context and Hook
 
-import AdditionalForm from "@/Components/Forms/AdditionalForm";
-import AttributesForm from "@/Components/Forms/AttributesForm";
-import GeneralForm from "@/Components/Forms/GeneralForm";
-import InventoryForm from "@/Components/Forms/InventoryForm";
-import LinkedProductsForm from "@/Components/Forms/LinkedProductsForm";
-import MediaForm from "@/Components/Forms/MediaForm";
-import PricingForm from "@/Components/Forms/PricingForm";
-import SeoForm from "@/Components/Forms/SeoForm";
-import VariationsForm from "@/Components/Forms/VariationsForm";
+import AdditionalForm from "@/Components/Forms/Product/AdditionalForm";
+import AttributesForm from "@/Components/Forms/Product/AttributesForm";
+import GeneralForm from "@/Components/Forms/Product/GeneralForm";
+import InventoryForm from "@/Components/Forms/Product/InventoryForm";
+import LinkedProductsForm from "@/Components/Forms/Product/LinkedProductsForm";
+import MediaForm from "@/Components/Forms/Product/MediaForm";
+import PricingForm from "@/Components/Forms/Product/PricingForm";
+import SeoForm from "@/Components/Forms/Product/SeoForm";
+import VariationsForm from "@/Components/Forms/Product/VariationsForm";
 import TabbedLayout from "@/Components/Layout/TabbedLayout";
 import { FormProvider, useFormState } from "@/Components/Context/FormContext";
 
