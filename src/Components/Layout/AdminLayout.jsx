@@ -99,6 +99,12 @@ const AdminLayout = ({ children }) => {
       href: "/statistics",
       isDropdown: false,
     },
+    {
+      icon: <FiPieChart size={20} />,
+      label: "Media",
+      href: "/media",
+      isDropdown: false,
+    },
   ];
 
   const settingItems = [

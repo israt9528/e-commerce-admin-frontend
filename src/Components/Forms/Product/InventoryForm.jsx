@@ -5,10 +5,8 @@ import { HiOutlineViewGrid } from "react-icons/hi";
 import { useFormState } from "../../Context/FormContext";
 
 const InventoryForm = ({ onNext }) => {
-  // 1. Access the global context
   const { formData, saveTabData } = useFormState();
 
-  // 2. Initialize Hook Form with values from the 'inventory' bucket
   const {
     register,
     handleSubmit,
@@ -21,9 +19,8 @@ const InventoryForm = ({ onNext }) => {
     },
   });
 
-  // 3. Save to the inventory section and move next
   const onSubmit = (data) => {
-    saveTabData("inventory", data); // Merges these fields into formData.inventory
+    saveTabData("inventory", data);
     onNext();
   };
 
@@ -47,20 +44,16 @@ const InventoryForm = ({ onNext }) => {
           />
         </div>
 
-        {/* Inventory Management Dropdown */}
+        {/* Quantity */}
         <div className="form-control">
           <label className="label-text mb-2 text-gray-600 font-medium">
-            Inventory Management
+            Quantity
           </label>
-          <select
-            {...register("management")}
-            className="select select-bordered w-full h-10 min-h-0 font-normal focus:outline-teal-500"
-          >
-            <option value="Do not Track Inventory">
-              Do not Track Inventory
-            </option>
-            <option value="Track Inventory">Track Inventory</option>
-          </select>
+          <input
+            type="number"
+            {...register("quantity")}
+            className="input input-bordered w-full h-10 focus:outline-teal-500"
+          />
         </div>
 
         {/* Stock Availability Dropdown */}

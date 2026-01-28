@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1623,
+    "thumbnail": "path/to/favicon_thumb.png",
+    "filename": "Favicon.svg",
+    "created": "8 months ago"
+  },
+  {
+    "id": 1622,
+    "thumbnail": "path/to/rtl_logo_thumb.png",
+    "filename": "Header Logo RTL.svg",
+    "created": "8 months ago"
+  },
+  {
+    "id": 1621,
+    "thumbnail": "path/to/header_logo_thumb.png",
+    "filename": "Header Logo.svg",
+    "created": "8 months ago"
+  },
+  {
+    "id": 1618,
+    "thumbnail": "path/to/abstract_banner_thumb.png",
+    "filename": "85f87417-3e5f-478c-a30f-de355b0f29b5.__CR0,0,970,300_PT0_SX970_V1___.jpeg",
+    "created": "1 year ago"
+  },
+  {
+    "id": 1617,
+    "thumbnail": "path/to/black_headphones_thumb.png",
+    "filename": "511H39e+M1L._AC_SX425_.jpg",
+    "created": "1 year ago"
+  },
+  {
+    "id": 1616,
+    "thumbnail": "path/to/earbuds_thumb.png",
+    "filename": "61u1ZepL8zL._AC_SX425_.jpg",
+    "created": "1 year ago"
+  },
+  {
+    "id": 1615,
+    "thumbnail": "path/to/white_headphones_thumb.png",
+    "filename": "512kZ0NjUpL._AC_SX425_.jpg",
+    "created": "1 year ago"
+  },
+  {
+    "id": 1614,
+    "thumbnail": "path/to/grey_headphones_thumb.png",
+    "filename": "61-UD3jyvAL._AC_SX425_.jpg",
+    "created": "1 year ago"
+  },
+  {
+    "id": 1613,
+    "thumbnail": "path/to/white_overear_thumb.png",
+    "filename": "51JJ5SHXCcL._AC_SX425_.jpg",
+    "created": "1 year ago"
+  },
+  {
+    "id": 1612,
+    "thumbnail": "path/to/black_pro_headphones_thumb.png",
+    "filename": "51QqreSg4fL._AC_SX425_.jpg",
+    "created": "1 year ago"
+  }
+]
