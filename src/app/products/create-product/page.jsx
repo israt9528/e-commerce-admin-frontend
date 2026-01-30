@@ -39,7 +39,7 @@ const CreateProductContent = () => {
     { label: "SEO", component: <SeoForm onNext={nextTab} /> },
     { label: "Additional", component: <AdditionalForm onNext={nextTab} /> },
     { label: "Linked Products", component: <LinkedProductsForm /> },
-    { label: "Preview Products", component: <ProductDetails /> },
+    // { label: "Preview Products", component: <ProductDetails /> },
   ];
 
   return (
