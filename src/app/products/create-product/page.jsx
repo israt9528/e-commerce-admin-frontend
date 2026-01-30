@@ -11,7 +11,9 @@ import PricingForm from "@/Components/Forms/Product/PricingForm";
 import SeoForm from "@/Components/Forms/Product/SeoForm";
 import VariationsForm from "@/Components/Forms/Product/VariationsForm";
 import TabbedLayout from "@/Components/Layout/TabbedLayout";
+import ProductDetails from "@/Components/Products/ProductDetails";
 import { FormProvider, useFormState } from "@/Components/Context/FormContext";
+
 
 const CreateProductContent = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -37,6 +39,7 @@ const CreateProductContent = () => {
     { label: "SEO", component: <SeoForm onNext={nextTab} /> },
     { label: "Additional", component: <AdditionalForm onNext={nextTab} /> },
     { label: "Linked Products", component: <LinkedProductsForm /> },
+    { label: "Preview Products", component: <ProductDetails /> },
   ];
 
   return (

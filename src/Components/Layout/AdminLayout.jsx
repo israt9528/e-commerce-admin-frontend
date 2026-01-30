@@ -49,6 +49,9 @@ const AdminLayout = ({ children }) => {
         { label: "All Products", href: "/products/all-products" },
         { label: "Categories", href: "/products/categories" },
         { label: "Brands", href: "/products/brands" },
+        { label: "Attributes", href: "/products/attributes" },
+        { label: "Tags", href: "/products/tags" },
+        { label: "Attributes Sets", href: "/products/attribute-sets" },
         { label: "Variations", href: "/products/variations" },
       ],
     },
@@ -103,6 +106,12 @@ const AdminLayout = ({ children }) => {
       icon: <FiPieChart size={20} />,
       label: "Media",
       href: "/media",
+      isDropdown: false,
+    },
+    {
+      icon: <FiPieChart size={20} />,
+      label: "Product Details",
+      href: "/product-details",
       isDropdown: false,
     },
   ];

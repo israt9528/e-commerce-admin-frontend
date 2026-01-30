@@ -1,0 +1,82 @@
+[
+  {
+    "checkbox": "",
+    "id": 20,
+    "name": "Bose",
+    "attributeSet": "Electronics",
+    "filterable": true,
+    "created": "1 year ago"
+  },
+  {
+    "checkbox": "",
+    "id": 9,
+    "name": "NOKIA",
+    "attributeSet": "Electronics",
+    "filterable": true,
+    "created": "5 years ago"
+  },
+  {
+    "checkbox": "",
+    "id": 8,
+    "name": "SONY",
+    "attributeSet": "Electronics",
+    "filterable": true,
+    "created": "5 years ago"
+  },
+  {
+    "checkbox": "",
+    "id": 7,
+    "name": "NIKE",
+    "attributeSet": "Clothing",
+    "filterable": false,
+    "created": "5 years ago"
+  },
+  {
+    "checkbox": "",
+    "id": 6,
+    "name": "Adidas",
+    "attributeSet": "Clothing",
+    "filterable": true,
+    "created": "5 years ago"
+  },
+  {
+    "checkbox": "",
+    "id": 5,
+    "name": "Beats",
+    "attributeSet": "Electronics",
+    "filterable": true,
+    "created": "5 years ago"
+  },
+  {
+    "checkbox": "",
+    "id": 4,
+    "name": "LG",
+    "attributeSet": "Electronics",
+    "filterable": false,
+    "created": "5 years ago"
+  },
+  {
+    "checkbox": "",
+    "id": 2,
+    "name": "MSI",
+    "attributeSet": "Electronics",
+    "filterable": true,
+    "created": "5 years ago"
+  },
+  {
+    "checkbox": "",
+    "id": 1,
+    "name": "Reebok",
+    "attributeSet": "Clothing",
+    "filterable": true,
+    "created": "5 years ago"
+  },
+  {
+    "checkbox": "",
+    "id": 0,
+    "name": "Lenovo",
+    "attributeSet": "Electronics",
+    "filterable": true,
+    "created": "5 years ago"
+  }
+]
