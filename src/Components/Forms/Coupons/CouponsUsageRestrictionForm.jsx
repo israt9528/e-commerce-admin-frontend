@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { X, DollarSign } from "lucide-react";
 
-const UsageRestrictionsForm = () => {
+const CouponsUsageRestrictionsForm = () => {
   const categoryData = [
     "Electronics",
     "Clothing",
@@ -311,4 +311,4 @@ const UsageRestrictionsForm = () => {
   );
 };
 
-export default UsageRestrictionsForm;
+export default CouponsUsageRestrictionsForm;

@@ -2,7 +2,7 @@ import TabbedLayout from "@/Components/Layout/TabbedLayout";
 import BrandMediaForm from "@/Components/Forms/Brand/BrandMediaForm";
 import React from "react";
 
-import FlashSalesSettingsForm from "@/Components/Forms/FlashSales/FlashSalesSettingsForm";
+
 import CouponGeneralForm from "@/Components/Forms/Coupons/CouponsGeneralForm";
 import CouponsUsageRestrictionForm from "@/Components/Forms/Coupons/CouponsUsageRestrictionForm";
 import CouponsUsageLimitForm from "@/Components/Forms/Coupons/CouponsUsageLimitForm";
