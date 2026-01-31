@@ -1,0 +1,52 @@
+[
+  {
+    "id": 10,
+    "name": "Accessories",
+    "created": "2 years ago"
+  },
+  {
+    "id": 9,
+    "name": "Networking",
+    "created": "3 years ago"
+  },
+  {
+    "id": 8,
+    "name": "Software",
+    "created": "1 year ago"
+  },
+  {
+    "id": 7,
+    "name": "Peripherals",
+    "created": "4 years ago"
+  },
+  {
+    "id": 6,
+    "name": "Gaming Gear",
+    "created": "2 years ago"
+  },
+  {
+    "id": 5,
+    "name": "Smart Devices",
+    "created": "3 years ago"
+  },
+  {
+    "id": 4,
+    "name": "Wearables",
+    "created": "5 years ago"
+  },
+  {
+    "id": 3,
+    "name": "Storage",
+    "created": "2 years ago"
+  },
+  {
+    "id": 2,
+    "name": "Processors",
+    "created": "4 years ago"
+  },
+  {
+    "id": 1,
+    "name": "Display",
+    "created": "3 years ago"
+  }
+]

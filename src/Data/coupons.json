@@ -1,0 +1,38 @@
+[
+  {
+    "id": 3,
+    "name": "Mega Winter Sale",
+    "code": "WINTER25",
+    "type": "percentage",
+    "value": 25,
+    "status": "active",
+    "created": "10 months ago"
+  },
+  {
+    "id": 3,
+    "name": "Summer Blast",
+    "code": "SUMMER20",
+    "type": "percentage",
+    "value": 20,
+    "status": "active",
+    "created": "5 months ago"
+  },
+  {
+    "id": 2,
+    "name": "Flash Friday",
+    "code": "FLASH15",
+    "type": "percentage",
+    "value": 15,
+    "status": "active",
+    "created": "2 months ago"
+  },
+  {
+    "id": 1,
+    "name": "New Year Deal",
+    "code": "NEWYEAR30",
+    "type": "percentage",
+    "value": 30,
+    "status": "active",
+    "created": "2 months ago"
+  }
+]
