@@ -26,7 +26,8 @@
     "react-icons": "^5.5.0",
     "react-quill-new": "^3.7.0",
     "react-select": "^5.10.2",
-    "simple-datatables": "^10.2.0"
+    "simple-datatables": "^10.2.0",
+    "zustand": "^5.0.11"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.18",

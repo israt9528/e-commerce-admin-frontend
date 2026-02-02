@@ -142,27 +142,23 @@ const AdminLayout = ({ children }) => {
       isDropdown: false,
     },
     {
-      icon: <FiCast size={20} />,
-      label: "Login",
-      href: "/login",
-      isDropdown: false,
-    },
-    {
       icon: <FiShoppingBag size={20} />,
       label: "Pages",
       href: "/pages",
       isDropdown: true,
       subItems: [
-        { label: "HomePage", href: "pages/home-page" },
-        // { label: "All Products", href: "/products/all-products" },
-        // { label: "Categories", href: "/products/categories" },
-        // { label: "Brands", href: "/products/brands" },
-        // { label: "Attributes", href: "/products/attributes" },
-        // { label: "Attributes Sets", href: "/products/attribute-sets" },
-        // { label: "Variations", href: "/products/variations" },
-        // { label: "Tags", href: "/products/tags" },
+        { label: "HomePage", href: "/pages/home-page" },
+        { label: "ProductDetails", href: "/pages/product-details" }
+
       ],
     },
+    {
+      icon: <FiCast size={20} />,
+      label: "Login",
+      href: "/login",
+      isDropdown: false,
+    },
+
   ];
 
   const settingItems = [

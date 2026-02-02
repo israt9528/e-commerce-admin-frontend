@@ -1,23 +1,17 @@
-import TabbedLayout from '@/Components/Layout/TabbedLayout';
+'use client'
 import React from 'react'
-import FlashSaleProductForm from '@/Components/Forms/FlashSales/FlashSalesProductForm';
-import FlashSalesSettingsForm from './../../../Components/Forms/FlashSales/FlashSalesSettingsForm';
+import PreviewPanel from '@/Components/Builder/PreviewPanel'
+import SelectionPanel from '@/Components/Builder/SelectionPanel'
+import VarientsPanel from '@/Components/Builder/VarientsPanel'
 
 const HomePage = () => {
-  const homePageTabs = [
-    { label: "Product", component: <FlashSaleProductForm /> },
-    { label: "Settings", component: <FlashSalesSettingsForm /> },
-  ];
   return (
-    <div>
-      <h1 className="text-primary text-3xl font-bold mb-5">
-        home Page
-      </h1>
-      <TabbedLayout tabs={homePageTabs}></TabbedLayout>
+    <div className="grid h-screen grid-cols-[260px_1fr_350px]">
+      <SelectionPanel />
+      <PreviewPanel />
+      <VarientsPanel />
     </div>
   )
 }
 
 export default HomePage
-
-
