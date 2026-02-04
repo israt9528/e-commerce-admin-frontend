@@ -38,9 +38,9 @@ export const useHomeSections = {
   navbar: {
     id: "navbar",
     label: "Navbar",
+    category: "Navigation",
     icon: <Menu className="w-4 h-4" />,
-    fixed: true,
-    fixedPosition: "top",
+    allowMultiple: false, // Set to true to allow multiple instances
     variations: [
       {
         id: "navbar-minimal",
@@ -99,7 +99,6 @@ export const useHomeSections = {
         name: "Glassmorphism",
         description: "Modern glass effect",
         tags: ["Glass", "Modern"],
-        // Gradient Theme
         Component: () => (
           <nav className="bg-gradient-to-r from-teal-700 to-emerald-800 backdrop-blur-md border border-teal-500 py-3.5 px-8 flex items-center justify-between font-sans">
             <div className="flex items-center gap-2">
@@ -153,8 +152,9 @@ export const useHomeSections = {
   hero: {
     id: "hero",
     label: "Hero Section",
+    category: "Content",
     icon: <Sparkles className="w-4 h-4" />,
-    fixed: false,
+    allowMultiple: true, // Allow multiple hero sections
     variations: [
       {
         id: "hero-centered",
@@ -303,8 +303,9 @@ export const useHomeSections = {
   features: {
     id: "features",
     label: "Features",
+    category: "Content",
     icon: <Grid3x3 className="w-4 h-4" />,
-    fixed: false,
+    allowMultiple: true,
     variations: [
       {
         id: "features-grid",
@@ -466,8 +467,9 @@ export const useHomeSections = {
   testimonials: {
     id: "testimonials",
     label: "Testimonials",
+    category: "Content",
     icon: <MessageCircle className="w-4 h-4" />,
-    fixed: false,
+    allowMultiple: true,
     variations: [
       {
         id: "testimonials-cards",
@@ -657,8 +659,9 @@ export const useHomeSections = {
   cta: {
     id: "cta",
     label: "Call to Action",
+    category: "Content",
     icon: <Target className="w-4 h-4" />,
-    fixed: false,
+    allowMultiple: true,
     variations: [
       {
         id: "cta-banner",
@@ -752,9 +755,9 @@ export const useHomeSections = {
   footer: {
     id: "footer",
     label: "Footer",
+    category: "Navigation",
     icon: <Minus className="w-4 h-4" />,
-    fixed: true,
-    fixedPosition: "bottom",
+    allowMultiple: false,
     variations: [
       {
         id: "footer-simple",
@@ -873,6 +876,19 @@ export const useHomeSections = {
       },
     ],
   },
+};
+
+// Group sections by category
+export const getGroupedSections = () => {
+  const grouped = {};
+  Object.values(useHomeSections).forEach((section) => {
+    const category = section.category;
+    if (!grouped[category]) {
+      grouped[category] = [];
+    }
+    grouped[category].push(section);
+  });
+  return grouped;
 };
 
 export const HomeOrder = [

@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { useHomeSections, HomeOrder } from "./Hooks/useHomeSections";
+import { useHomeSections, getGroupedSections } from "./Hooks/useHomeSections";
 
 import LeftPanel from "./Panels/LeftPanel";
 import MiddlePanel from "./Panels/MiddlePanel";
@@ -10,46 +10,70 @@ import ExportModal from "./Panels/ExportModal";
 export default function PageBuilder() {
   // State management
   const [selectedSection, setSelectedSection] = useState("navbar");
-  const [pageConfig, setPageConfig] = useState({
-    navbar: "navbar-minimal",
-    hero: "hero-centered",
-    features: "features-grid",
-    testimonials: "testimonials-cards",
-    cta: "cta-banner",
-    footer: "footer-simple",
-  });
-  const [activeSections, setActiveSections] = useState([
-    "navbar",
-    "hero",
-    "features",
-    "cta",
-    "footer",
+  const [selectedInstanceId, setSelectedInstanceId] = useState("navbar-1"); // Track specific instance
+
+  // Changed: sections is now an array of instances with unique IDs
+  const [sections, setSections] = useState([
+    {
+      instanceId: "navbar-1",
+      sectionId: "navbar",
+      variationId: "navbar-minimal",
+    },
   ]);
-  const [dragOrder, setDragOrder] = useState(["hero", "features", "cta"]);
+
   const [draggedItem, setDraggedItem] = useState(null);
   const [dragOverIndex, setDragOverIndex] = useState(null);
   const [showExport, setShowExport] = useState(false);
 
   // Event handlers
-  const handleVariationSelect = (sectionId, variationId) => {
-    setPageConfig((prev) => ({ ...prev, [sectionId]: variationId }));
+  const handleVariationSelect = (instanceId, variationId) => {
+    setSections((prev) =>
+      prev.map((s) =>
+        s.instanceId === instanceId ? { ...s, variationId } : s,
+      ),
+    );
   };
 
-  const toggleSection = (sectionId) => {
+  // NEW: Add section to the page
+  const addSection = (sectionId) => {
     const section = useHomeSections[sectionId];
-    if (section.fixed) return;
 
-    setActiveSections((prev) =>
-      prev.includes(sectionId)
-        ? prev.filter((s) => s !== sectionId)
-        : [...prev, sectionId],
-    );
+    // Check if multiple instances are allowed
+    if (!section.allowMultiple) {
+      const exists = sections.some((s) => s.sectionId === sectionId);
+      if (exists) {
+        alert(`Only one ${section.label} section is allowed`);
+        return;
+      }
+    }
 
-    setDragOrder((prev) =>
-      prev.includes(sectionId)
-        ? prev.filter((s) => s !== sectionId)
-        : [...prev, sectionId],
-    );
+    const defaultVariation = section.variations[0].id;
+    const newInstanceId = `${sectionId}-${Date.now()}`;
+    const newInstance = {
+      instanceId: newInstanceId,
+      sectionId: sectionId,
+      variationId: defaultVariation,
+    };
+
+    setSections((prev) => [...prev, newInstance]);
+    setSelectedSection(sectionId);
+    setSelectedInstanceId(newInstanceId); // Select the newly added instance
+  };
+
+  // NEW: Remove section from the page
+  const removeSection = (instanceId) => {
+    setSections((prev) => prev.filter((s) => s.instanceId !== instanceId));
+
+    // If we're removing the selected instance, select another one
+    if (selectedInstanceId === instanceId) {
+      const remainingInstances = sections.filter(
+        (s) => s.instanceId !== instanceId,
+      );
+      if (remainingInstances.length > 0) {
+        setSelectedInstanceId(remainingInstances[0].instanceId);
+        setSelectedSection(remainingInstances[0].sectionId);
+      }
+    }
   };
 
   // Drag & Drop handlers
@@ -66,10 +90,10 @@ export default function PageBuilder() {
   const handleDrop = (e, index) => {
     e.preventDefault();
     if (draggedItem === null || draggedItem === index) return;
-    const updated = [...dragOrder];
+    const updated = [...sections];
     const [moved] = updated.splice(draggedItem, 1);
     updated.splice(index, 0, moved);
-    setDragOrder(updated);
+    setSections(updated);
     setDraggedItem(null);
     setDragOverIndex(null);
   };
@@ -79,50 +103,40 @@ export default function PageBuilder() {
     setDragOverIndex(null);
   };
 
-  // Helper functions
-  const getPreviewOrder = () => {
-    const result = [];
-    if (activeSections.includes("navbar")) result.push("navbar");
-    dragOrder.forEach((s) => {
-      if (activeSections.includes(s)) result.push(s);
-    });
-    if (activeSections.includes("footer")) result.push("footer");
-    return result;
-  };
-
   const getExportJSON = () => ({
     version: "1.0",
     generatedAt: new Date().toISOString(),
     pages: [
       {
         id: "main-page",
-        sections: getPreviewOrder().map((sId) => ({
-          id: sId,
-          variationId: pageConfig[sId],
-          fixed: useHomeSections[sId].fixed || false,
-          fixedPosition: useHomeSections[sId].fixedPosition || null,
+        sections: sections.map((s) => ({
+          instanceId: s.instanceId,
+          sectionId: s.sectionId,
+          variationId: s.variationId,
         })),
       },
     ],
   });
 
   return (
-    <div className="h-screen font-sans bg-gray-950 text-gray-300 overflow-hidden grid  grid-cols-[260px_1fr_350px]">
+    <div className="h-screen font-sans bg-gray-950 text-gray-300 overflow-hidden grid grid-cols-[260px_1fr_350px]">
       <LeftPanel
         selectedSection={selectedSection}
         setSelectedSection={setSelectedSection}
-        activeSections={activeSections}
-        toggleSection={toggleSection}
+        selectedInstanceId={selectedInstanceId}
+        setSelectedInstanceId={setSelectedInstanceId}
+        sections={sections}
+        addSection={addSection}
         useHomeSections={useHomeSections}
-        HomeOrder={HomeOrder}
+        getGroupedSections={getGroupedSections}
       />
 
       <MiddlePanel
         selectedSection={selectedSection}
         setSelectedSection={setSelectedSection}
-        pageConfig={pageConfig}
-        activeSections={activeSections}
-        dragOrder={dragOrder}
+        selectedInstanceId={selectedInstanceId}
+        setSelectedInstanceId={setSelectedInstanceId}
+        sections={sections}
         setDraggedItem={setDraggedItem}
         setDragOverIndex={setDragOverIndex}
         handleDragStart={handleDragStart}
@@ -131,14 +145,16 @@ export default function PageBuilder() {
         handleDragEnd={handleDragEnd}
         draggedItem={draggedItem}
         dragOverIndex={dragOverIndex}
-        getPreviewOrder={getPreviewOrder}
         useHomeSections={useHomeSections}
         setShowExport={setShowExport}
+        removeSection={removeSection}
       />
 
       <RightPanel
         selectedSection={selectedSection}
-        pageConfig={pageConfig}
+        selectedInstanceId={selectedInstanceId}
+        setSelectedInstanceId={setSelectedInstanceId}
+        sections={sections}
         handleVariationSelect={handleVariationSelect}
         useHomeSections={useHomeSections}
       />
