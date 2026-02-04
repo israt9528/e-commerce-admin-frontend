@@ -12,6 +12,10 @@ export default function PageBuilder() {
   const [selectedSection, setSelectedSection] = useState("navbar");
   const [selectedInstanceId, setSelectedInstanceId] = useState("navbar-1"); // Track specific instance
 
+  // Panel collapse states
+  const [leftPanelCollapsed, setLeftPanelCollapsed] = useState(false);
+  const [rightPanelCollapsed, setRightPanelCollapsed] = useState(false);
+
   // Changed: sections is now an array of instances with unique IDs
   const [sections, setSections] = useState([
     {
@@ -118,8 +122,17 @@ export default function PageBuilder() {
     ],
   });
 
+  // Calculate grid columns based on panel states
+  const getGridColumns = () => {
+    const leftWidth = leftPanelCollapsed ? "48px" : "260px";
+    const rightWidth = rightPanelCollapsed ? "48px" : "350px";
+    return `${leftWidth} 1fr ${rightWidth}`;
+  };
+
   return (
-    <div className="h-screen font-sans bg-gray-950 text-gray-300 overflow-hidden grid grid-cols-[260px_1fr_350px]">
+    <div
+      className="h-screen font-sans bg-white text-gray-300 overflow-hidden grid transition-all duration-150"
+      style={{ gridTemplateColumns: getGridColumns() }}>
       <LeftPanel
         selectedSection={selectedSection}
         setSelectedSection={setSelectedSection}
@@ -129,6 +142,8 @@ export default function PageBuilder() {
         addSection={addSection}
         useHomeSections={useHomeSections}
         getGroupedSections={getGroupedSections}
+        isCollapsed={leftPanelCollapsed}
+        setIsCollapsed={setLeftPanelCollapsed}
       />
 
       <MiddlePanel
@@ -157,6 +172,8 @@ export default function PageBuilder() {
         sections={sections}
         handleVariationSelect={handleVariationSelect}
         useHomeSections={useHomeSections}
+        isCollapsed={rightPanelCollapsed}
+        setIsCollapsed={setRightPanelCollapsed}
       />
 
       <ExportModal

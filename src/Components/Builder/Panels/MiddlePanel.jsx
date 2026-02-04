@@ -167,7 +167,7 @@ const MiddlePanel = ({
                               <div className="absolute top-1.5 right-1.5 z-10 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                 {/* Drag Handle */}
                                 <div className="text-gray-600 text-xs px-2 py-0.5 rounded cursor-grab pointer-events-auto hover:bg-gray-100 bg-white shadow-sm">
-                                  та┐ drag
+                                  Drag
                                 </div>
 
                                 {/* Remove Button */}
@@ -177,8 +177,7 @@ const MiddlePanel = ({
                                     removeSection(instance.instanceId);
                                   }}
                                   className="text-white bg-red-500 hover:bg-red-600 text-xs px-2 py-0.5 rounded pointer-events-auto transition-colors shadow-sm flex items-center gap-1">
-                                  <X className="w-3 h-3" />
-                                  remove
+                                  <X className="w-3 h-3" /> delete
                                 </button>
                               </div>
 
