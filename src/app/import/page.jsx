@@ -64,7 +64,7 @@ const ImportPage = () => {
         {/* Header & Breadcrumbs */}
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-4">
           <div>
-            <h1 className="text-3xl font-extrabold text-slate-800 tracking-tight">
+            <h1 className="text-3xl font-extrabold text-primary tracking-tight">
               Import Products
             </h1>
           </div>

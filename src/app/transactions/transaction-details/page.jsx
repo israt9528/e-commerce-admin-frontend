@@ -135,8 +135,8 @@ const TransactionDetails = () => {
 
   return (
     <div className="bg-[#f0f3f4] min-h-screen p-4 md:p-8 font-sans text-[#444]">
-      <div className="max-w-[1400px] mx-auto">
-        <h1 className="text-2xl font-bold text-slate-700 mb-6">
+      <div className="max-w-350 mx-auto">
+        <h1 className="text-2xl font-bold text-primary mb-6">
           Transactions Details
         </h1>
 

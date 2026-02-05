@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import transactionData from "@/Data/transaction.json";
-import { Calendar, Download, Printer, RefreshCcw } from "lucide-react";
+import { Calendar, RefreshCcw } from "lucide-react";
 
 const TransactionPage = () => {
   const tableRef = useRef(null);
@@ -23,20 +23,30 @@ const TransactionPage = () => {
       table = $(tableRef.current).DataTable({
         data: transactionData,
         pageLength: 10,
-        pagingType: "numbers", // Matches MediaPage style
+        pagingType: "numbers",
+        lengthChange: true,
         ordering: true,
         searching: true,
+        info: true,
         destroy: true,
-        // Layout matching your MediaPage structure
+        // ✅ Matching BrandsPage Layout (dom)
         dom:
-          "<'dt-top flex justify-between items-center p-4'<'dt-left flex items-center'l>f>" +
-          "<'border rounded-lg overflow-hidden't>" +
+          "<'dt-top flex justify-between items-center p-4'<'dt-left flex items-center'l<'ml-4 delete-btn'>>f>" +
+          "t" +
           "<'dt-bottom flex justify-between items-center p-4'i p>",
+
         columns: [
+          // ✅ Added Selection Column
+          {
+            data: null,
+            orderable: false,
+            className: "text-center",
+            render: () =>
+              `<input type="checkbox" class="checkbox checkbox-sm row-checkbox" />`,
+          },
           {
             data: null,
             title: "DATE & TIME",
-            className: "text-sm py-4",
             render: (data) => `
               <div class="flex flex-col">
                 <span class="font-bold text-slate-700">${data.date}</span>
@@ -58,7 +68,6 @@ const TransactionPage = () => {
             title: "METHOD",
             className: "text-slate-600 font-medium",
           },
-          { data: "type", title: "TYPE", className: "text-slate-400" },
           {
             data: "status",
             title: "STATUS",
@@ -72,14 +81,6 @@ const TransactionPage = () => {
               return `<span class="px-3 py-1 rounded-full text-[10px] font-black border ${colors[data] || "bg-gray-50"}">${data}</span>`;
             },
           },
-          { data: "country", title: "COUNTRY", className: "text-slate-500" },
-          {
-            data: "currency",
-            title: "CURR",
-            className: "text-slate-500 font-mono",
-          },
-          { data: "fee", title: "FEE", render: (data) => data.toFixed(2) },
-          { data: "tax", title: "TAX", render: (data) => data.toFixed(1) },
           {
             data: "amount",
             title: "AMOUNT",
@@ -93,6 +94,29 @@ const TransactionPage = () => {
           lengthMenu: "Show _MENU_ entries",
         },
       });
+
+      // ✅ Inject Delete button like BrandsPage
+      $(".delete-btn").html(`
+        <button class="btn btn-outline btn-sm">
+          Delete
+        </button>
+      `);
+
+      // ✅ ROW SELECTION LOGIC (Copied from BrandsPage)
+      $(tableRef.current).on("click", "tbody tr", function (e) {
+        if ($(e.target).is("input")) return;
+        $(this).toggleClass("selected");
+        $(this)
+          .find(".row-checkbox")
+          .prop("checked", $(this).hasClass("selected"));
+      });
+
+      $(tableRef.current).on("click", ".row-checkbox", function (e) {
+        e.stopPropagation();
+        const row = $(this).closest("tr");
+        row.toggleClass("selected", this.checked);
+      });
+
       setIsLoaded(true);
     };
 
@@ -100,15 +124,15 @@ const TransactionPage = () => {
 
     return () => {
       if (table) table.destroy();
+      if ($) $(tableRef.current).off();
     };
   }, []);
 
   return (
     <div className="p-8 bg-[#f8f9fa] min-h-screen font-sans">
-      {/* Header Section */}
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-3xl font-black text-slate-800 tracking-tight">
+          <h1 className="text-3xl font-black text-primary tracking-tight">
             Transactions
           </h1>
           <div className="flex items-center gap-2 text-slate-400 text-sm mt-1 font-medium">
@@ -121,7 +145,6 @@ const TransactionPage = () => {
         </div>
       </div>
 
-      {/* Filter Bar (Visual Only) */}
       <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-100 mb-6 flex justify-between items-center">
         <div className="flex flex-col">
           <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">
@@ -144,8 +167,7 @@ const TransactionPage = () => {
         </div>
       </div>
 
-      {/* DataTable Container */}
-      <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6 relative">
+      <div className="datatable-container">
         {!isLoaded && (
           <div className="flex items-center justify-center p-20 text-slate-400 animate-pulse">
             Loading data...
@@ -154,42 +176,21 @@ const TransactionPage = () => {
         <div
           className={`transaction-table ${isLoaded ? "opacity-100" : "opacity-0"} transition-opacity duration-300`}
         >
-          <table ref={tableRef} className="display w-full border-none">
-            {/* Table generated by DataTables */}
+          <table ref={tableRef} className="display w-full">
+            <thead>
+              <tr>
+                <th></th>
+                <th>DATE & TIME</th>
+                <th>SELLER</th>
+                <th>SKU</th>
+                <th>METHOD</th>
+                <th>STATUS</th>
+                <th className="text-right">AMOUNT</th>
+              </tr>
+            </thead>
           </table>
         </div>
       </div>
-
-      <style jsx global>{`
-        /* Header Styling */
-        .transaction-table table.dataTable thead th {
-          background: #fdfdfd !important;
-          color: #3b82f6 !important;
-          font-size: 11px !important;
-          font-weight: 800 !important;
-          letter-spacing: 0.05em;
-          padding: 12px 15px !important;
-          border-bottom: 1px solid #f1f5f9 !important;
-          text-align: left !important;
-        }
-
-        /* Search input matching MediaPage */
-        .transaction-table .dataTables_wrapper .dataTables_filter input {
-          border: 1px solid #e2e8f0;
-          border-radius: 8px;
-          padding: 8px 14px;
-          background: #f8fafc;
-          outline: none;
-          margin-left: 12px;
-          font-size: 14px;
-        }
-
-        .transaction-table table.dataTable tbody td {
-          border-bottom: 1px solid #f8fafc !important;
-          padding: 18px 15px !important;
-          vertical-align: middle;
-        }
-      `}</style>
     </div>
   );
 };
