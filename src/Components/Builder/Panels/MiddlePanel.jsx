@@ -1,6 +1,11 @@
 "use client";
-import { Copy, Download, Layout, X } from "lucide-react";
+import { Copy, Download, Layout } from "lucide-react";
 import React from "react";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import SortableSection from "./SortableSection";
 
 const MiddlePanel = ({
   selectedSection,
@@ -8,59 +13,27 @@ const MiddlePanel = ({
   selectedInstanceId,
   setSelectedInstanceId,
   sections,
-  handleDragStart,
-  handleDragOver,
-  handleDrop,
-  handleDragEnd,
-  draggedItem,
-  dragOverIndex,
   useHomeSections,
   setShowExport,
   removeSection,
 }) => {
-  const colors = {
-    primary: "bg-cyan-600",
-    secondary: "bg-cyan-400",
-  };
-
   return (
-    <div className="flex flex-col h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="flex flex-col h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 p-4 shadow-sm">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2">
-              <Layout className="w-6 h-6 text-blue-600" />
-              <h1 className="text-xl font-bold text-gray-900">
-                Page Builder Preview
-              </h1>
-            </div>
-            <div className="hidden md:flex items-center space-x-2 text-sm text-gray-600">
-              <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded">
-                Live Preview
-              </span>
-              <span className="text-xs text-gray-400">
-                {sections.length} section{sections.length !== 1 ? "s" : ""}
-              </span>
-            </div>
-          </div>
+      <div className="bg-white border-b p-4 flex justify-between">
+        <h1 className="text-lg font-bold text-gray-900">
+          Page Builder Preview
+        </h1>
 
-          <div className="flex items-center space-x-4">
-            <button
-              onClick={() => setShowExport(true)}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-              <Copy className="w-5 h-5 text-gray-600" />
-            </button>
-            <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-              <Download className="w-5 h-5 text-gray-600" />
-            </button>
-            <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-              Publish
-            </button>
-          </div>
+        <div className="flex gap-2">
+          <button onClick={() => setShowExport(true)}>
+            <Copy className="w-5 h-5" />
+          </button>
+          <Download className="w-5 h-5" />
         </div>
       </div>
 
+<<<<<<< Updated upstream
       <div className="flex flex-1 overflow-hidden">
         {/* Main Preview Area */}
         <div className="flex-1 overflow-auto p-4 md:p-4">
@@ -192,8 +165,32 @@ const MiddlePanel = ({
                 </div>
               </div>
             </div>
+=======
+      {/* Preview */}
+      <div className="flex-1 overflow-auto p-4">
+        {sections.length === 0 ? (
+          <div className="flex flex-col items-center justify-center h-full text-gray-400">
+            <Layout className="w-16 h-16 mb-4" />
+            <p>No sections added yet</p>
+>>>>>>> Stashed changes
           </div>
-        </div>
+        ) : (
+          <SortableContext
+            items={sections.map((s) => s.instanceId)}
+            strategy={verticalListSortingStrategy}>
+            {sections.map((instance) => (
+              <SortableSection
+                key={instance.instanceId}
+                instance={instance}
+                selectedInstanceId={selectedInstanceId}
+                setSelectedInstanceId={setSelectedInstanceId}
+                setSelectedSection={setSelectedSection}
+                useHomeSections={useHomeSections}
+                removeSection={removeSection}
+              />
+            ))}
+          </SortableContext>
+        )}
       </div>
     </div>
   );

@@ -6,6 +6,8 @@ import LeftPanel from "./Panels/LeftPanel";
 import MiddlePanel from "./Panels/MiddlePanel";
 import RightPanel from "./Panels/RightPanel";
 import ExportModal from "./Panels/ExportModal";
+import { DndContext, closestCenter } from "@dnd-kit/core";
+import { arrayMove } from "@dnd-kit/sortable";
 
 export default function PageBuilder() {
   // State management
@@ -25,8 +27,6 @@ export default function PageBuilder() {
     },
   ]);
 
-  const [draggedItem, setDraggedItem] = useState(null);
-  const [dragOverIndex, setDragOverIndex] = useState(null);
   const [showExport, setShowExport] = useState(false);
 
   // Event handlers
@@ -80,31 +80,18 @@ export default function PageBuilder() {
     }
   };
 
-  // Drag & Drop handlers
-  const handleDragStart = (e, index) => {
-    setDraggedItem(index);
-    e.dataTransfer.effectAllowed = "move";
-  };
+  // DnD drag and drop handler
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
 
-  const handleDragOver = (e, index) => {
-    e.preventDefault();
-    setDragOverIndex(index);
-  };
+    if (!over || active.id === over.id) return;
 
-  const handleDrop = (e, index) => {
-    e.preventDefault();
-    if (draggedItem === null || draggedItem === index) return;
-    const updated = [...sections];
-    const [moved] = updated.splice(draggedItem, 1);
-    updated.splice(index, 0, moved);
-    setSections(updated);
-    setDraggedItem(null);
-    setDragOverIndex(null);
-  };
+    setSections((items) => {
+      const oldIndex = items.findIndex((i) => i.instanceId === active.id);
+      const newIndex = items.findIndex((i) => i.instanceId === over.id);
 
-  const handleDragEnd = () => {
-    setDraggedItem(null);
-    setDragOverIndex(null);
+      return arrayMove(items, oldIndex, newIndex);
+    });
   };
 
   const getExportJSON = () => ({
@@ -146,24 +133,18 @@ export default function PageBuilder() {
         setIsCollapsed={setLeftPanelCollapsed}
       />
 
-      <MiddlePanel
-        selectedSection={selectedSection}
-        setSelectedSection={setSelectedSection}
-        selectedInstanceId={selectedInstanceId}
-        setSelectedInstanceId={setSelectedInstanceId}
-        sections={sections}
-        setDraggedItem={setDraggedItem}
-        setDragOverIndex={setDragOverIndex}
-        handleDragStart={handleDragStart}
-        handleDragOver={handleDragOver}
-        handleDrop={handleDrop}
-        handleDragEnd={handleDragEnd}
-        draggedItem={draggedItem}
-        dragOverIndex={dragOverIndex}
-        useHomeSections={useHomeSections}
-        setShowExport={setShowExport}
-        removeSection={removeSection}
-      />
+      <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        <MiddlePanel
+          selectedSection={selectedSection}
+          setSelectedSection={setSelectedSection}
+          selectedInstanceId={selectedInstanceId}
+          setSelectedInstanceId={setSelectedInstanceId}
+          sections={sections}
+          useHomeSections={useHomeSections}
+          setShowExport={setShowExport}
+          removeSection={removeSection}
+        />
+      </DndContext>
 
       <RightPanel
         selectedSection={selectedSection}
