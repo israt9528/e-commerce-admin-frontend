@@ -85,10 +85,10 @@ const AdminLayout = ({ children }) => {
       href: "/transactions",
       isDropdown: true,
       subItems: [
-        { label: "Transaction", href: "/transaction/transaction" },
+        { label: "Transaction", href: "/transactions/transaction" },
         {
           label: "Transaction Details",
-          href: "/transaction/transaction-details",
+          href: "/transactions/transaction-details",
         },
       ],
     },
@@ -231,7 +231,8 @@ const AdminLayout = ({ children }) => {
     ${isCollapsed ? "w-20 overflow-visible" : "w-64 overflow-x-hidden"} 
     transition-all duration-300 h-screen bg-white border-r border-gray-100 
     flex flex-col z-40
-  `}>
+  `}
+        >
           <div className=" flex items-center w-full border-b border-gray-50">
             {!isCollapsed ? (
               <div className="flex items-center justify-between w-full px-4">
@@ -239,7 +240,8 @@ const AdminLayout = ({ children }) => {
 
                 <button
                   onClick={() => setIsCollapsed(!isCollapsed)}
-                  className="btn btn-ghost hidden lg:flex text-gray-400 p-2">
+                  className="btn btn-ghost hidden lg:flex text-gray-400 p-2"
+                >
                   <LuLayoutGrid size={22} />
                 </button>
               </div>
@@ -247,7 +249,8 @@ const AdminLayout = ({ children }) => {
               <div className="flex items-center justify-center w-full my-3">
                 <button
                   onClick={() => setIsCollapsed(!isCollapsed)}
-                  className="btn btn-ghost hidden lg:flex text-gray-400 p-2">
+                  className="btn btn-ghost hidden lg:flex text-gray-400 p-2"
+                >
                   <LuLayoutGrid size={22} />
                 </button>
               </div>
@@ -255,7 +258,8 @@ const AdminLayout = ({ children }) => {
           </div>
 
           <ul
-            className={`menu w-full py-5 gap-1.5 text-gray-500 font-medium overflow-visible ${isCollapsed ? "px-2 max-w-2 items-center overflow-visible" : "px-3"}`}>
+            className={`menu w-full py-5 gap-1.5 text-gray-500 font-medium overflow-visible ${isCollapsed ? "px-2 max-w-2 items-center overflow-visible" : "px-3"}`}
+          >
             {menuItems.map((item, idx) => {
               const isActive = path.startsWith(item.href) && item.href !== "/";
 
@@ -269,7 +273,8 @@ const AdminLayout = ({ children }) => {
                           isActive
                             ? "text-primary bg-secondary hover:bg-secondary! font-medium"
                             : ""
-                        }`}>
+                        }`}
+                      >
                         <span className="flex items-center gap-3">
                           {item.icon} {item.label}
                         </span>
@@ -287,9 +292,11 @@ const AdminLayout = ({ children }) => {
                       hover:bg-transparent focus:bg-transparent 
                       active:bg-transparent hover:text-primary 
                       ${isSubActive ? "text-primary font-bold" : "text-gray-500"}
-                    `}>
+                    `}
+                              >
                                 <span
-                                  className={`h-1.5 w-1.5 rounded-full bg-current ${isSubActive ? "opacity-100" : "opacity-30"}`}></span>
+                                  className={`h-1.5 w-1.5 rounded-full bg-current ${isSubActive ? "opacity-100" : "opacity-30"}`}
+                                ></span>
                                 {sub.label}
                               </Link>
                             </li>
@@ -301,7 +308,8 @@ const AdminLayout = ({ children }) => {
                     <NavLink
                       href={item.href}
                       className={`flex items-center gap-3 ${isCollapsed ? "justify-center tooltip tooltip-right z-100" : ""}`}
-                      data-tip={isCollapsed ? item.label : ""}>
+                      data-tip={isCollapsed ? item.label : ""}
+                    >
                       {item.icon}
                       {!isCollapsed && <span>{item.label}</span>}
                     </NavLink>
@@ -310,14 +318,16 @@ const AdminLayout = ({ children }) => {
               );
             })}
             <div
-              className={`divider my-2 opacity-50 ${isCollapsed ? "px-2" : "px-4"}`}></div>
+              className={`divider my-2 opacity-50 ${isCollapsed ? "px-2" : "px-4"}`}
+            ></div>
 
             {settingItems.map((item, idx) => (
               <li key={idx} className="w-full">
                 <NavLink
                   href={item.href}
                   className={`flex items-center ${isCollapsed ? "justify-center tooltip tooltip-right" : ""}`}
-                  data-tip={isCollapsed ? item.label : ""}>
+                  data-tip={isCollapsed ? item.label : ""}
+                >
                   <span className="">{item.icon}</span>
                   {!isCollapsed && <span>{item.label}</span>}
                 </NavLink>
