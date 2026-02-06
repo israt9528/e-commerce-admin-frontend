@@ -68,7 +68,7 @@ const MiddlePanel = ({
             {/* Preview Container */}
             <div className="relative min-w-full  bg-white rounded-xl shadow-2xl border border-gray-200 overflow-auto transition-all duration-300">
               {/* Browser Frame */}
-              <div className="sticky top-0 z-10 bg-gray-100 p-2 ">
+              <div className="sticky  top-0 z-10 bg-gray-100 p-2 ">
                 <div className="flex items-center p-3 ">
                   <div className="flex space-x-2 mr-4">
                     <div className="w-3 h-3 bg-red-400 rounded-full"></div>
@@ -82,9 +82,9 @@ const MiddlePanel = ({
 
                 {/* Page Content */}
                 <div className="flex-1  overflow-y-auto bg-gray-50">
-                  <div className="max-w-6xl mx-auto overflow-hidden shadow-lg  border h-auto border-gray-200 bg-white">
+                  <div className="w-full overflow-hidden shadow-lg  border h-full border-gray-200 bg-white">
                     {sections.length === 0 ? (
-                      <div className="flex flex-col h-auto items-center justify-center py-32 text-gray-400">
+                      <div className="flex flex-col  items-center justify-center h-dvh text-gray-400">
                         <Layout className="w-16 h-16 mb-4 opacity-50" />
                         <p className="text-lg font-medium">
                           No sections added yet
@@ -114,7 +114,9 @@ const MiddlePanel = ({
                             : "";
 
                         return (
-                          <div key={instance.instanceId}>
+                          <div
+                            className="text-gray-400"
+                            key={instance.instanceId}>
                             {/* Drag Drop Indicator */}
                             {dragOverIndex !== null &&
                               dragOverIndex === idx &&

@@ -17,13 +17,7 @@ export default function PageBuilder() {
   const [rightPanelCollapsed, setRightPanelCollapsed] = useState(false);
 
   // Changed: sections is now an array of instances with unique IDs
-  const [sections, setSections] = useState([
-    {
-      instanceId: "navbar-1",
-      sectionId: "navbar",
-      variationId: "navbar-minimal",
-    },
-  ]);
+  const [sections, setSections] = useState([]);
 
   const [draggedItem, setDraggedItem] = useState(null);
   const [dragOverIndex, setDragOverIndex] = useState(null);
